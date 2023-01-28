@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Create New Product</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.min.css" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+
+<body>
+	<div class="container text-center">
+		<div th:if="${product.id == null}">
+			<h1>Create New Product</h1>
+		</div>
+		<div th:unless="${product.id == null}">
+			<h1>Edit Product</h1>
+		</div>
+
+
+		<form th:action="@{/products/save}" th:object="${product}" method="post"
+			style="max-width: 600px; margin: 0 auto;">
+			<input type="hidden" th:field="*{id}" th:value="${product.id}" />
+			<div class="m-3">
+
+
+				<div class="form-group row mb-3">
+					<label class="col-form-label col-sm-4">Designation :</label>
+
+					<div class="col-sm-8">
+						<select name="designation" class="form-control">
+							<th:block th:each="designation : ${listDesignation}">
+							<option th:text="${designation.name}" th:value="${designation.id}" />
+							</th:block>
+						</select>
+					</div>
+				</div>
+
+				
+				
+				<div class="form-group row mb-3">
+					<label class="col-form-label col-sm-4">Employer Name :</label>
+					<div class="col-sm-8">
+						<select th:field="*{employee}" class="form-control">
+							<th:block th:each="emp : ${listEmployee}">
+								<option th:text="${emp.name}" th:value="${emp.id}" />
+							</th:block>
+						</select>
+					</div>
+				</div>
+
+				<div class="container mb-4 form-group" data-live-search="true">
+					<label class="col-form-label col-sm-4">Product Type :</label>
+
+					<select th:field="*{selectedOptionIds}" class="livesearch" multiple="true">
+						<option value=1>Home Loan</option>
+						<option value=2>Personal Loan</option>
+					</select>
+				</div>
+
+
+				<div class="text-center p-3">
+					<button type="submit" class="btn btn-primary">Save</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js" />
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+		integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+		integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+		crossorigin="anonymous"></script>
+	<script type="text/javascript">$(".livesearch").chosen();</script>
+</body>
+
+</html>
